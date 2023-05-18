@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,14 +8,19 @@
     <script src="https://unpkg.com/wavesurfer.js"></script>
     <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>GPOP Editor</title>
 </head>
+
 <body>
     <h2>gpop.io Editor</h2>
     <div class="main">
         <div id="waveform"></div>
+        <div id="notes">
+            <canvas width="100vw" height="100vh" id="canvas">
+            </canvas>
+        </div>
     </div>
     <script>
         var wavesurfer = WaveSurfer.create({
@@ -22,6 +28,24 @@
             vertical: true
         });
         wavesurfer.load('test.mp3');
+        wavesurfer.on('ready', function () {
+            //wavesurfer.play();
+        });
+
+        var c = document.getElementById("canvas");
+        c.width = document.getElementById("notes").clientWidth;
+        c.height = document.getElementById("waveform").clientHeight;
+        var ctx = c.getContext("2d");
+        var width = c.width;
+        var height = c.height;
+        var lineWidth = width/4;
+
+        for(var i = 0; i < 5; i++){
+            ctx.moveTo(i*(width/4), 0);
+            ctx.lineTo(i*(width/4), height);
+            ctx.stroke();
+        }
     </script>
 </body>
+
 </html>
