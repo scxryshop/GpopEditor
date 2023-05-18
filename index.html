@@ -11,21 +11,48 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <title>GPOP Editor</title>
+    <script>
+        function init(){
+            const div = document.querySelector("#notes");
+            const waveform = document.querySelector("#waveform");
+
+            div.addEventListener("click", e => {
+                console.log(e);
+                //console.log(e.offsetX, div.scrollHeight - e.offsetY); //returns height of Click on Timeline from Bottom
+            });
+
+            var counter = 50;
+            div.addEventListener("wheel", e => {
+                var delta = Math.sign(e.deltaY);
+                
+                if(e.altKey){
+                    if(delta > 0){
+                        waveform.style.height = waveform.style.height * 0.9;
+                    }else{
+                        waveform.style.height = waveform.style.height * 1.1;
+                    }
+                    console.log(counter)
+                }
+            });
+        }
+        
+    </script>
 </head>
 
-<body>
+<body onload="init()">
     <h2>gpop.io Editor</h2>
     <div class="main">
         <div id="waveform"></div>
         <div id="notes">
-            <canvas width="100vw" height="100vh" id="canvas">
+            <canvas id="canvas">
             </canvas>
         </div>
     </div>
     <script>
         var wavesurfer = WaveSurfer.create({
             container: '#waveform',
-            vertical: true
+            vertical: true,
+            scrollParent: false
         });
         wavesurfer.load('test.mp3');
         wavesurfer.on('ready', function () {
@@ -40,10 +67,14 @@
         var height = c.height;
         var lineWidth = width/4;
 
+        ctx.lineWidth = 1;
         for(var i = 0; i < 5; i++){
-            ctx.moveTo(i*(width/4), 0);
-            ctx.lineTo(i*(width/4), height);
+            ctx.beginPath();
+            ctx.translate(0.5,0.5); //crispier lines (dann fehlt aber irgendwie die letzte Linie)
+            ctx.moveTo(i * width / 4, 0);
+            ctx.lineTo(i * width / 4, height);
             ctx.stroke();
+            ctx.closePath();
         }
     </script>
 </body>

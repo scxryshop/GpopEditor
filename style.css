@@ -28,4 +28,5 @@ h2{
     width: 20%;
     max-width: 20%;
     float: left;
+    overflow-y: hidden;
 }
