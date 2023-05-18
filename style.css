@@ -1,0 +1,22 @@
+*{
+    font-family: 'Roboto', sans-serif;
+}
+h2{
+    text-align: center;
+}
+.main{
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px black;
+    width: 70vw;
+    height: 60vh;
+    overflow-y: scroll;
+}
+#waveform {
+    display: flex;
+    height: 200vw;
+}
